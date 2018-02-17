@@ -1,4 +1,4 @@
-package br.com.videoproject;
+package br.com.videoproject.controller.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

@@ -4,6 +4,7 @@
     <title>Video Project</title>
 </head>
 <body>
+<!-- TODO layout refactor with css bootstrap -->
 Error!
 </body>
 </html>

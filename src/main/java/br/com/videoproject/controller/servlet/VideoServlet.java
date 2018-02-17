@@ -1,4 +1,4 @@
-package br.com.videoproject;
+package br.com.videoproject.controller.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,7 @@ public class VideoServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        //TODO call service logic to upload video and forward to video converted preview
         resp.sendRedirect("video-view.jsp");
-
     }
 }
