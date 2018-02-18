@@ -1,8 +1,15 @@
 package br.com.videoproject.model.service;
 
-public class VideoService {
+import br.com.videoproject.model.entity.Video;
 
-    //TODO create upload logic to store in amazon s3
+import java.util.List;
 
-    //TODO create logic to call external converter video service
+public interface VideoService {
+
+    Video add(Video video);
+
+    List<Video> list();
+
+    List<Video> findByName(String name);
+
 }

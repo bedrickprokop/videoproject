@@ -8,6 +8,14 @@ import javax.persistence.Id;
 @Entity
 public class Video {
 
+    public Video(){}
+
+    public Video(String name, String description, String path){
+        this.name = name;
+        this.description = description;
+        this.path = path;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

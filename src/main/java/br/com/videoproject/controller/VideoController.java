@@ -38,7 +38,7 @@ public class VideoController {
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public String listByName(@PathVariable("name") String name, Model model) {
+    public String findByName(@PathVariable("name") String name, Model model) {
         List<Video> videoList = videoRepository.findByName(name);
         if(videoList != null) {
             model.addAttribute("videoList", videoList);
