@@ -25,7 +25,7 @@
 <hr />
 
 <h3>Upload a new video here</h3>
-<form method="POST">
+<form method="POST" action="/video" enctype="multipart/form-data">
 
     <label for="name">Name:</label>
     <input type="text" name="name" size="50"/><br />
@@ -33,6 +33,10 @@
 
     <label for="description">Description:</label><br />
     <textarea name="description" cols="80" rows="5"> </textarea>
+
+    <label for="video">Upload video:</label><br />
+    <input type="file" name="video" />
+
     <br /> <input type="submit"/>
 </form>
 </body>
