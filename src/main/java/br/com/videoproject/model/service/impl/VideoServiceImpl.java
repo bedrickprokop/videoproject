@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -17,17 +18,20 @@ public class VideoServiceImpl implements VideoService {
     private VideoRepository videoRepository;
 
     @Override
-    public Video add(Video video) {
+    public Video add(@Valid Video video) {
         return videoRepository.save(video);
     }
 
     @Override
     public List<Video> list() {
-        return null;
+        return videoRepository.findAll();
     }
 
     @Override
     public List<Video> findByName(String name) {
-        return null;
+        if (name != null && !name.isEmpty()) {
+            return videoRepository.findByName(name);
+        }
+        return videoRepository.findAll();
     }
 }
