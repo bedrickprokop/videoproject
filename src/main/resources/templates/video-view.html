@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Video list</title>
+</head>
+<body>
+
+<h2>All videos</h2>
+
+<div th:unless="${#lists.isEmpty(videoList)}">
+    <dl th:each="video : ${videoList}">
+
+        <dt class="videoHeadline">
+            <span th:text="${video.name}">Name</span>
+        </dt>
+        <dd class="videoDescription">
+            <span th:if="${video.description}" th:text="${video.description}">Description</span>
+            <span th:if="${video.description eq null}"> No description!</span>
+        </dd>
+    </dl>
+</div>
+<div th:if="${#lists.isEmpty(videoList)}">
+    <p>There is no videos in database :/</p>
+</div>
+<hr />
+
+<h3>Upload a new video here</h3>
+<form method="POST">
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" size="50"/><br />
+
+
+    <label for="description">Description:</label><br />
+    <textarea name="description" cols="80" rows="5"> </textarea>
+    <br /> <input type="submit"/>
+</form>
+</body>
+</html>
