@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(locations="classpath:application.properties")
+@TestPropertySource(locations = "classpath:application.properties")
 @ContextConfiguration(classes = {App.class, H2Config.class, S3Config.class})
 @WebAppConfiguration
 public class VideoServiceTest {
@@ -27,6 +27,7 @@ public class VideoServiceTest {
 
     private Video video1;
     private Video video2;
+    private Video video3;
 
     @Before
     public void setup() {
@@ -34,8 +35,9 @@ public class VideoServiceTest {
         for (int i = 0; i < 12; i++) {
             bytes[i] = (byte) (4 * (i + 1) / (i + 1));
         }
-        video1 = new Video("Video test 1", "Video description test 1", bytes);
-        video2 = new Video("Video test 2", "Video description test 2", null);
+        video1 = new Video("video_test1.dv", "Video description test 1", ".dv", bytes);
+        video2 = new Video("video_test2.dv", "Video description test 2", ".dv", null);
+        video3 = new Video("video_test3", "Video description test 3", "", bytes);
     }
 
     @Test
@@ -48,6 +50,11 @@ public class VideoServiceTest {
     public void createFailWithNullName() {
         video1.setName(null);
         videoService.add(video1);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void createFailWithInvalidType() {
+        videoService.add(video3);
     }
 
     @Test(expected = RuntimeException.class)
@@ -66,7 +73,7 @@ public class VideoServiceTest {
     @Test
     public void findByName() {
         videoService.add(video1);
-        List<Video> videoList = videoService.findByName("Video test 1");
+        List<Video> videoList = videoService.findByName("video_test1.dv");
         Video video11 = videoList.get(0);
 
         Assert.assertEquals(video11.getName(), video1.getName());

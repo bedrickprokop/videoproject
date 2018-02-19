@@ -51,6 +51,7 @@ public class VideoController {
 
         try {
             video.setBytes(file.getBytes());
+            video.setContentType(file.getContentType());
             video.setName(file.getOriginalFilename());
             videoService.add(video);
 
@@ -58,6 +59,11 @@ public class VideoController {
             //        "You successfully uploaded '" + file.getOriginalFilename() + "'");
             return "redirect:/video";
         } catch (IOException e) {
+            logger.error("method/add - exception: ".concat(e.getMessage()));
+
+            //TODO create exception treatment
+            return "redirect:/video";
+        } catch (Exception e) {
             logger.error("method/add - exception: ".concat(e.getMessage()));
 
             //TODO create exception treatment

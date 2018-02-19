@@ -8,9 +8,10 @@ public class Video {
 
     public Video(){}
 
-    public Video(String name, String description, byte[] bytes){
+    public Video(String name, String description, String contentType, byte[] bytes){
         this.name = name;
         this.description = description;
+        this.contentType = contentType;
         this.bytes = bytes;
     }
 
@@ -26,6 +27,9 @@ public class Video {
 
     @Transient
     private byte[] bytes;
+
+    @Transient
+    private String contentType;
 
     public Long getId() {
         return id;
@@ -57,5 +61,13 @@ public class Video {
 
     public void setBytes(byte[] bytes) {
         this.bytes = bytes;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }
