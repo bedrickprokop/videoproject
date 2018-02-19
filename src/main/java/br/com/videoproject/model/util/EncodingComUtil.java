@@ -11,8 +11,8 @@ import java.net.URLEncoder;
 
 public class EncodingComUtil {
 
-    private static final String userID = "106256";
-    private static final String userKey = "46cf138c4946e11ca9c149a0463bf756";
+    private static final String userID = "";
+    private static final String userKey = "";
 
     public static String getStatus(String mediaId) {
         StringBuffer xml = new StringBuffer();
