@@ -18,7 +18,9 @@ public class VideoServiceImpl implements VideoService {
     private VideoRepository videoRepository;
 
     @Override
-    public Video add(@Valid Video video) {
+    public Video add(Video video) {
+        //TODO define video path
+        video.setPath("");
         return videoRepository.save(video);
     }
 

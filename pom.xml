@@ -31,45 +31,10 @@
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
-    <!-- Dependencies to run tests automatically in the integration-tests phase-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Hamcrest dependency - framework for tests - allows us checking for conditions in code via matchers classes -->
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-all</artifactId>
-      <version>1.3</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- RestAssured dependency - to test and validate rest services -->
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <version>3.0.3</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Mock dependencies -->
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>spring-mock-mvc</artifactId>
-      <version>3.0.3</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -88,56 +53,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.20</version>
-      </plugin>
-
-      <!-- Plugin for integration tests -->
-      <!-- The maven-failsafe-plugin, consider, by default, any class ending with 'IT' as an integration test -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.20</version>
-
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>verify</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-
-      </plugin>
-
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <!-- With this, we can start the build process executing the integration tests by command: mvn verify.
-        This command will build the project, start tomcat container, deploy the project and issue tests against it.
-        -->
-        <executions>
-          <execution>
-            <id>pre-integration-test</id>
-            <goals>
-              <goal>start</goal>
-            </goals>
-          </execution>
-
-          <execution>
-            <id>post-integration-test</id>
-            <goals>
-              <goal>stop</goal>
-            </goals>
-          </execution>
-
-        </executions>
-
       </plugin>
     </plugins>
   </build>
