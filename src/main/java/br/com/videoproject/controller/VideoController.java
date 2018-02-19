@@ -2,6 +2,8 @@ package br.com.videoproject.controller;
 
 import br.com.videoproject.model.entity.Video;
 import br.com.videoproject.model.service.VideoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +21,15 @@ import java.util.List;
 @RequestMapping("/video")
 public class VideoController {
 
+    private Logger logger = LoggerFactory.getLogger(VideoController.class);
+
     @Autowired
     private VideoService videoService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
+        logger.info("method/list");
+
         List<Video> videoList = videoService.list();
         model.addAttribute("videoList", videoList);
         return "video-view";
@@ -31,6 +37,8 @@ public class VideoController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String findByName(@PathVariable("name") String name, Model model) {
+        logger.info("method/findByName");
+
         List<Video> videoList = videoService.findByName(name);
         model.addAttribute("videoList", videoList);
         return "video-view";
@@ -39,6 +47,7 @@ public class VideoController {
     @RequestMapping(method = RequestMethod.POST)
     public String add(Video video, @RequestParam("video") MultipartFile file,
                       RedirectAttributes redirectAttributes) {
+        logger.info("method/add");
 
         try {
             video.setBytes(file.getBytes());
@@ -49,6 +58,7 @@ public class VideoController {
             //        "You successfully uploaded '" + file.getOriginalFilename() + "'");
             return "redirect:/video";
         } catch (IOException e) {
+            logger.error("method/add - exception: ".concat(e.getMessage()));
 
             //TODO create exception treatment
             return "redirect:/video";

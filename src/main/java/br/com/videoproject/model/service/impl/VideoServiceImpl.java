@@ -37,6 +37,8 @@ public class VideoServiceImpl implements VideoService {
     public Video add(Video video) {
         logger.info("method/add");
 
+        //TODO validate uploaded file to only video type
+
         byte[] bytes = video.getBytes();
         if (bytes.length == 0) {
             logger.info("method/add - exception empty video file");
@@ -57,16 +59,16 @@ public class VideoServiceImpl implements VideoService {
             return videoRepository.save(video);
 
         } catch (AmazonServiceException e) {
-            logger.info("method/add - exception with some reasons:");
-            logger.info("message - " + e.getMessage());
-            logger.info("status code - " + e.getStatusCode());
-            logger.info("aws error code - " + e.getErrorCode());
-            logger.info("error type - " + e.getErrorType());
+            logger.error("method/add - exception with some reasons:");
+            logger.error("message - " + e.getMessage());
+            logger.error("status code - " + e.getStatusCode());
+            logger.error("aws error code - " + e.getErrorCode());
+            logger.error("error type - " + e.getErrorType());
 
             throw new RuntimeException("Error uploading video");
         } catch (AmazonClientException e) {
-            logger.info("method/add - exception with some reasons:");
-            logger.info("error message: " + e.getMessage());
+            logger.error("method/add - exception with some reasons:");
+            logger.error("error message: " + e.getMessage());
 
             throw new RuntimeException("Error uploading video");
         }
