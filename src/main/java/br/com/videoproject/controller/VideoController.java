@@ -42,6 +42,7 @@ public class VideoController {
 
         try {
             video.setBytes(file.getBytes());
+            video.setName(file.getOriginalFilename());
             videoService.add(video);
 
             //redirectAttributes.addFlashAttribute("message",

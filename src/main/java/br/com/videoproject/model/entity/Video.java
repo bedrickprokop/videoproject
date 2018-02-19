@@ -24,9 +24,6 @@ public class Video {
     @NotNull
     private String description;
 
-    @NotNull
-    private String path;
-
     @Transient
     private byte[] bytes;
 
@@ -52,14 +49,6 @@ public class Video {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public byte[] getBytes() {

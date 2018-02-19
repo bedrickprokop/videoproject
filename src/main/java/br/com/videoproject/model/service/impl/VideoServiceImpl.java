@@ -3,51 +3,86 @@ package br.com.videoproject.model.service.impl;
 import br.com.videoproject.model.entity.Video;
 import br.com.videoproject.model.repository.VideoRepository;
 import br.com.videoproject.model.service.VideoService;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @Service
 @Transactional
 public class VideoServiceImpl implements VideoService {
 
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "/home/break/Development/java";
+    private Logger logger = LoggerFactory.getLogger(VideoServiceImpl.class);
 
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private AmazonS3 s3client;
+
+    @Value("${jsa.s3.bucket}")
+    private String bucketName;
+
     @Override
     public Video add(Video video) {
+        logger.info("method/add");
+
         byte[] bytes = video.getBytes();
         if (bytes.length == 0) {
-            throw new RuntimeException("File is empty");
+            logger.info("method/add - exception empty video file");
+            throw new RuntimeException("Empty video file");
         }
 
         try {
-            Path path = Paths.get(UPLOADED_FOLDER + video.getName());
-            Files.write(path, bytes);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(bytes.length);
+            //objectMetadata.setContentType("video/mp4");
 
-            video.setPath("path/to/video");
+            s3client.putObject(new PutObjectRequest(bucketName, video.getName(),
+                    byteArrayInputStream, objectMetadata));
+
+            logger.info("method/add - upload video file to aws-s3 done");
+
             return videoRepository.save(video);
-        } catch (IOException e) {
+
+        } catch (AmazonServiceException e) {
+            logger.info("method/add - exception with some reasons:");
+            logger.info("message - " + e.getMessage());
+            logger.info("status code - " + e.getStatusCode());
+            logger.info("aws error code - " + e.getErrorCode());
+            logger.info("error type - " + e.getErrorType());
+
+            throw new RuntimeException("Error uploading video");
+        } catch (AmazonClientException e) {
+            logger.info("method/add - exception with some reasons:");
+            logger.info("error message: " + e.getMessage());
+
             throw new RuntimeException("Error uploading video");
         }
     }
 
     @Override
     public List<Video> list() {
+        logger.info("method/list");
+
         return videoRepository.findAll();
     }
 
     @Override
     public List<Video> findByName(String name) {
+        logger.info("method/findByName");
+
         if (name != null && !name.isEmpty()) {
             return videoRepository.findByName(name);
         }
