@@ -22,19 +22,20 @@
 <div th:if="${#lists.isEmpty(videoList)}">
     <p>There is no videos in database :/</p>
 </div>
-<hr />
+<hr/>
 
 <h3>Upload a new video here</h3>
 <form method="POST" action="/video" enctype="multipart/form-data">
 
-    <label for="description">Description:</label><br />
+    <label for="description">Description:</label><br/>
     <textarea name="description" cols="80" rows="5"> </textarea>
 
-    <label for="video">Upload video:</label><br />
+    <label for="video">Upload video:</label><br/>
 
-    <input type="file" name="video" accept="video/3gpp2,video/3gpp,.3gp2,.3gp,.asf,video/avi,.avs,.dv,.f4v,.flc,.fli,video/x-flv,.gvi,.m1v,video/mpeg,.m4e,.m4u,video/x-m4v,.mjp,video/x-matroska,.moov,video/quicktime,.movie,video/mp4,.mpv2,.rm,.ts,.vfw,.vob,.wm,video/x-ms-wmv"/>
+    <input type="file" name="video"
+           accept="video/3gpp2,video/3gpp,.3gp2,.3gp,.asf,video/avi,.avs,.dv,.f4v,.flc,.fli,video/x-flv,.gvi,.m1v,video/mpeg,.m4e,.m4u,video/x-m4v,.mjp,video/x-matroska,.moov,video/quicktime,.movie,video/mp4,.mpv2,.rm,.ts,.vfw,.vob,.wm,video/x-ms-wmv"/>
 
-    <br /> <input type="submit"/>
+    <br/> <input type="submit"/>
 </form>
 </body>
 </html>
