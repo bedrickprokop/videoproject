@@ -8,10 +8,10 @@ public class Video {
 
     public Video(){}
 
-    public Video(String name, String description, String path){
+    public Video(String name, String description, byte[] bytes){
         this.name = name;
         this.description = description;
-        this.path = path;
+        this.bytes = bytes;
     }
 
     @Id
@@ -26,6 +26,9 @@ public class Video {
 
     @NotNull
     private String path;
+
+    @Transient
+    private byte[] bytes;
 
     public Long getId() {
         return id;
@@ -57,5 +60,13 @@ public class Video {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
     }
 }

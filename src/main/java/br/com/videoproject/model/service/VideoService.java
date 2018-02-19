@@ -11,5 +11,4 @@ public interface VideoService {
     List<Video> list();
 
     List<Video> findByName(String name);
-
 }

@@ -7,21 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
 @Transactional
 public class VideoServiceImpl implements VideoService {
 
+    //Save the uploaded file to this folder
+    private static String UPLOADED_FOLDER = "/home/break/Development/java";
+
     @Autowired
     private VideoRepository videoRepository;
 
     @Override
     public Video add(Video video) {
-        //TODO define video path
-        video.setPath("");
-        return videoRepository.save(video);
+        byte[] bytes = video.getBytes();
+        if (bytes.length == 0) {
+            throw new RuntimeException("File is empty");
+        }
+
+        try {
+            Path path = Paths.get(UPLOADED_FOLDER + video.getName());
+            Files.write(path, bytes);
+
+            video.setPath("path/to/video");
+            return videoRepository.save(video);
+        } catch (IOException e) {
+            throw new RuntimeException("Error uploading video");
+        }
     }
 
     @Override

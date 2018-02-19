@@ -25,36 +25,41 @@ public class VideoServiceTest {
 
     @Before
     public void setup() {
-        video1 = new Video("Video test 1", "Video description test 1", "path/to/video");
-        video2 = new Video("Video test 2", "Video description test 2", "path/to/video");
+        byte[] bytes = new byte[12];
+        for (int i = 0; i < 12; i++) {
+            bytes[i] = (byte) (4 * (i + 1) / (i + 1));
+        }
+        video1 = new Video("Video test 1", "Video description test 1", bytes);
+        video2 = new Video("Video test 2", "Video description test 2", null);
     }
 
     @Test
-    public void createSuccess(){
+    public void createSuccess() {
         video1 = videoService.add(video1);
         Assert.assertNotNull(video1.getId());
     }
 
     @Test(expected = RuntimeException.class)
-    public void createFail(){
+    public void createFailWithNullName() {
         video1.setName(null);
-        video1.setDescription(null);
-        video1.setPath(null);
         videoService.add(video1);
     }
 
-    @Test
-    public void list(){
-        videoService.add(video1);
+    @Test(expected = RuntimeException.class)
+    public void createFailWithNullBytes() {
         videoService.add(video2);
+    }
 
+    @Test
+    public void list() {
+        videoService.add(video1);
         List<Video> videoList = videoService.list();
 
         Assert.assertNotNull(videoList);
     }
 
     @Test
-    public void findByName(){
+    public void findByName() {
         videoService.add(video1);
         List<Video> videoList = videoService.findByName("Video test 1");
         Video video11 = videoList.get(0);
@@ -63,7 +68,7 @@ public class VideoServiceTest {
     }
 
     @Test
-    public void findByEmptyName(){
+    public void findByEmptyName() {
         videoService.add(video1);
         List<Video> videoList = videoService.findByName("");
 
