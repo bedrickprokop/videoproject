@@ -8,10 +8,10 @@ public class Video {
 
     public Video(){}
 
-    public Video(String name, String description, String contentType, byte[] bytes){
+    public Video(String name, String description, String inputFormat, byte[] bytes){
         this.name = name;
         this.description = description;
-        this.contentType = contentType;
+        this.inputFormat = inputFormat;
         this.bytes = bytes;
     }
 
@@ -28,8 +28,17 @@ public class Video {
     @Transient
     private byte[] bytes;
 
-    @Transient
-    private String contentType;
+    @Column(name = "input_format")
+    private String inputFormat;
+
+    @Column(name = "output_format")
+    private String outputFormat;
+
+    @Column(name = "input_url")
+    private String inputUrl;
+
+    @Column(name = "output_url")
+    private String outputUrl;
 
     public Long getId() {
         return id;
@@ -63,11 +72,35 @@ public class Video {
         this.bytes = bytes;
     }
 
-    public String getContentType() {
-        return contentType;
+    public String getInputFormat() {
+        return inputFormat;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public void setInputFormat(String inputFormat) {
+        this.inputFormat = inputFormat;
+    }
+
+    public String getOutputFormat() {
+        return outputFormat;
+    }
+
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
+    }
+
+    public String getInputUrl() {
+        return inputUrl;
+    }
+
+    public void setInputUrl(String inputUrl) {
+        this.inputUrl = inputUrl;
+    }
+
+    public String getOutputUrl() {
+        return outputUrl;
+    }
+
+    public void setOutputUrl(String outputUrl) {
+        this.outputUrl = outputUrl;
     }
 }

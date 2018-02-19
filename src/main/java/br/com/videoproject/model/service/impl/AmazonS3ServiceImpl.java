@@ -29,12 +29,13 @@ public class AmazonS3ServiceImpl implements CloudStorageService {
     @Value("${jsa.s3.bucket}")
     private String bucketName;
 
-    public void addOnCloud(Video video) {
+    @Override
+    public Video addOnCloud(Video video) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(video.getBytes());
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(video.getBytes().length);
-            objectMetadata.setContentType(video.getContentType());
+            objectMetadata.setContentType(video.getInputFormat());
 
             final PutObjectRequest request = new PutObjectRequest(bucketName, video.getName()
                     , byteArrayInputStream, objectMetadata);
@@ -54,6 +55,11 @@ public class AmazonS3ServiceImpl implements CloudStorageService {
                 throw new RuntimeException(e);
             }
             logger.info("method/add - upload video file to aws-s3 done");
+
+            video.setInputUrl("https://s3-sa-east-1.amazonaws.com.s3.amazonaws.com/"
+                    .concat(request.getBucketName().concat("/")).concat(video.getName()));
+
+            return video;
 
         } catch (AmazonServiceException e) {
             logger.error("method/add - exception with some reasons:");

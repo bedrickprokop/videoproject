@@ -39,7 +39,7 @@ public class VideoServiceImpl implements VideoService {
         logger.info("method/add");
 
         byte[] bytes = video.getBytes();
-        String contentType = video.getContentType();
+        String contentType = video.getInputFormat();
 
         isVideoFileValid(bytes);
         isVideoTypeValid(contentType);

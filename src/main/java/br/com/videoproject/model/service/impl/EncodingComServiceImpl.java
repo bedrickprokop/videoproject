@@ -2,6 +2,7 @@ package br.com.videoproject.model.service.impl;
 
 import br.com.videoproject.model.entity.Video;
 import br.com.videoproject.model.service.VideoEncodingService;
+import br.com.videoproject.model.util.EncodingComUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,19 +11,18 @@ public class EncodingComServiceImpl implements VideoEncodingService {
     @Override
     public Video processVideo(Video video) {
 
-        //send video to encoding.com via post
+        String mediaId = EncodingComUtil.addMedia(video.getInputUrl());
 
-        while (!status.equalsXXX) {
-
-            //get status video
-            //set new video url
+        String destination = "";
+        while (destination.isEmpty()) {
+            destination = EncodingComUtil.getStatus(mediaId);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
+        video.setOutputUrl(destination);
         return video;
     }
 }

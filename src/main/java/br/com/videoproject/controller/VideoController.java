@@ -51,11 +51,11 @@ public class VideoController {
 
         try {
             video.setBytes(file.getBytes());
-            video.setContentType(file.getContentType());
+            video.setInputFormat(file.getContentType());
             video.setName(file.getOriginalFilename());
             video = videoService.add(video);
 
-            return "redirect:".concat(video.getNewUrl());
+            return "redirect:".concat(video.getOutputUrl());
         } catch (IOException e) {
             logger.error("method/add - exception: ".concat(e.getMessage()));
 
